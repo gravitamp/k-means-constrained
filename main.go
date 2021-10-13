@@ -41,7 +41,7 @@ func main() {
 	min, max := MinMax(count)
 	fmt.Println(min, max)
 	iter := 0
-	for max-min > 5 {
+	for max-min > 3 {
 		var count3 []int
 		//  Plan the steps of adjustment among clusters;
 		// 19 step (0, 1) (1,2), dst
@@ -50,13 +50,10 @@ func main() {
 			// cc, _ := New(20, clusters[i].Observations)
 			var diffA Observations
 			var diffB []diffsort
+
 			//call borderadjust, get new cluster A & B
-			if i < (len(clusters) - 1) {
-				diffA, diffB = clusters.borderadjust(i, i+1)
-			} else {
-				diffA, diffB = clusters.borderadjust(i, 0)
-			}
-			// fmt.Println(len(diffA), "&", len(diffB))
+			diffA, diffB = clusters.borderadjust(i)
+
 			if len(diffA) == 0 && len(diffB) == 0 {
 				continue
 			} else if len(diffA) != 0 && len(diffB) != 0 {

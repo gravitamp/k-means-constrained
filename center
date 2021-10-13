@@ -1,0 +1,99 @@
+before constrained
+Centered at x: -87.67 y: 41.76
+total 0: 127
+Centered at x: -87.64 y: 41.88
+total 1: 153
+Centered at x: -87.66 y: 41.86
+total 2: 21
+Centered at x: -87.55 y: 41.70
+total 3: 63
+Centered at x: -87.68 y: 41.88
+total 4: 132
+Centered at x: -87.68 y: 41.82
+total 5: 140
+Centered at x: -87.68 y: 41.94
+total 6: 75
+Centered at x: -87.57 y: 41.77
+total 7: 68
+Centered at x: -87.62 y: 41.85
+total 8: 86
+Centered at x: -87.75 y: 41.97
+total 9: 94
+Centered at x: -87.70 y: 41.97
+total 10: 98
+Centered at x: -87.66 y: 41.70
+total 11: 92
+Centered at x: -87.78 y: 41.91
+total 12: 148
+Centered at x: -87.72 y: 41.92
+total 13: 128
+Centered at x: -87.61 y: 41.75
+total 14: 136
+Centered at x: -87.60 y: 41.81
+total 15: 101
+Centered at x: -87.64 y: 41.78
+total 16: 115
+Centered at x: -87.70 y: 41.80
+total 17: 72
+Centered at x: -87.72 y: 41.85
+total 18: 42
+Centered at x: -87.63 y: 41.89
+total 19: 139
+2030
+
+21 153
+iterasi ke- 1
+63 168
+jarak 105
+iterasi ke- 2
+98 106
+jarak 8
+iterasi ke- 3
+101 105
+jarak 4
+iterasi ke- 4
+101 103
+jarak 2
+
+after constrained
+Centered at x: -87.67 y: 41.76
+total 0: 103
+Centered at x: -87.64 y: 41.88
+total 1: 101
+Centered at x: -87.64 y: 41.88
+total 2: 102
+Centered at x: -87.58 y: 41.71
+total 3: 102
+Centered at x: -87.68 y: 41.88
+total 4: 102
+Centered at x: -87.68 y: 41.82
+total 5: 101
+Centered at x: -87.68 y: 41.92
+total 6: 102
+Centered at x: -87.61 y: 41.79
+total 7: 101
+Centered at x: -87.63 y: 41.85
+total 8: 102
+Centered at x: -87.75 y: 41.96
+total 9: 101
+Centered at x: -87.70 y: 41.97
+total 10: 101
+Centered at x: -87.66 y: 41.70
+total 11: 101
+Centered at x: -87.78 y: 41.92
+total 12: 101
+Centered at x: -87.72 y: 41.92
+total 13: 101
+Centered at x: -87.61 y: 41.76
+total 14: 101
+Centered at x: -87.60 y: 41.81
+total 15: 102
+Centered at x: -87.65 y: 41.78
+total 16: 102
+Centered at x: -87.71 y: 41.82
+total 17: 101
+Centered at x: -87.72 y: 41.87
+total 18: 101
+Centered at x: -87.63 y: 41.89
+total 19: 102
+2030
