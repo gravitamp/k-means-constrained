@@ -63,24 +63,6 @@ func (c Clusters) Nearest(point Observation) int {
 	return ci
 }
 
-//if nearest full
-func (c Clusters) NearestToo(point Observation) int {
-	var ci int
-	dist := -1.0
-
-	// Find the nearest cluster for this data point. use neighbour
-	for i, _ := range c {
-		_, d := c.Neighbour(point, i)
-		if dist < 0 || d < dist {
-			dist = d
-			ci = i
-		}
-
-	}
-
-	return ci
-}
-
 // Neighbour returns the neighbouring cluster of a point along with the average distance to its points
 func (c Clusters) Neighbour(point Observation, fromCluster int) (int, float64) {
 	var d float64
