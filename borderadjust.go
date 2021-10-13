@@ -31,7 +31,7 @@ func (c Clusters) borderadjust(A int, B int) (Observations, []diffsort) {
 		return diff[i].differ < diff[j].differ
 	})
 	//  Move the first m point in area A based on sorted
-	// diff(p, B) to area B; (HOW??)
+	// diff(p, B) to area B;
 	n := rand.Intn(103-100) + 100
 	if len(c[A].Observations) > len(c[B].Observations) && len(c[A].Observations) > n {
 		m := len(c[A].Observations) - n

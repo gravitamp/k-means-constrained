@@ -92,6 +92,7 @@ func main() {
 				return //nil, fmt.Errorf("failed to plot chart: %s", err)
 			}
 		}
+		//max iter
 		if iter == 10 {
 			break
 		}
