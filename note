@@ -4,3 +4,5 @@ Vehicle Routing Problem," 2009 Third International Symposium on Intelligent Info
 Application, 2009, pp. 87-90, doi: 10.1109/IITA.2009.307."
 
 idea: sort neighbour distance first
+
+idea: tiap iterasi, 1 kali pindah
