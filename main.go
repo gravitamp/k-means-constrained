@@ -15,6 +15,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 )
 
@@ -43,34 +44,64 @@ func main() {
 	iter := 0
 	for max-min > 10 {
 		var count3 []int
-
+		type sorted struct {
+			cl int
+			dt float64
+		}
+		var sortcd []sorted
+		for i, _ := range clusters {
+			// search nearest neighbour
+			// r, cd := clusters.Neighbour(clusters[i].Center, 0)
+			// for _, p := range clusters[i].Observations {
+			// r, _ = c.Neighbour(p, A)
+			distA := clusters[0].Center.Distance(clusters[i].Center)
+			sortcd = append(sortcd, sorted{
+				i,
+				distA,
+			})
+			// }
+		}
+		sort.SliceStable(sortcd, func(i, j int) bool {
+			return sortcd[i].dt < sortcd[j].dt
+		})
 		//  Plan the steps of adjustment among clusters;
-
+		// 19 step (0, 1) (1,2), dst
 		for i := 0; i < len(clusters); i++ {
 
 			// cc, _ := New(20, clusters[i].Observations)
 			var diffA Observations
 			var diffB []diffsort
 
-			if len(clusters[i].Observations) > 102 {
-				//call borderadjust, get new cluster A & B
-				//cari neighbour yang isinya sedikit (HOW?)
-				B, _ := clusters.Neighbour(clusters[i].Center, i)
-				if len(clusters[B].Observations) > 102 {
-					fmt.Println("overload")
-				}
-				diffA, diffB = clusters.borderadjust(i, B)
+			if len(clusters[i].Observations) < 102 {
+				continue
+			}
 
-				if len(diffA) == 0 && len(diffB) == 0 {
-					continue
-				} else if len(diffA) != 0 && len(diffB) != 0 {
-					clusters[i].Observations = diffA
-					if i < (len(clusters) - 1) {
-						for j := 0; j < len(diffB); j++ {
-							clusters[B].Observations = append(clusters[B].Observations, diffB[j].data)
-						}
+			// fmt.Println(sortcd)
+			//call borderadjust, get new cluster A & B
+			if i > 0 && i < len(clusters) {
+				// B, _ = clusters.Neighbour(clusters[i].Observations[i], i)
+				diffA, diffB = clusters.borderadjust(sortcd[i-1].cl, sortcd[i].cl)
+				// fmt.Println(diffA, diffB)
+				// } else {
+				// 	diffA, diffB = clusters.borderadjust(sortcd[i].cl, sortcd[0].cl)
+			}
+
+			if len(diffA) == 0 && len(diffB) == 0 {
+				continue
+			} else if len(diffA) != 0 && len(diffB) != 0 && i > 0 {
+				clusters[sortcd[i-1].cl].Observations = diffA
+				if i > 0 && i < len(clusters) {
+					for j := 0; j < len(diffB); j++ {
+						clusters[sortcd[i].cl].Observations = append(clusters[sortcd[i].cl].Observations, diffB[j].data)
 					}
+					// } else {
+					// 	for j := 0; j < len(diffB); j++ {
+					// 		clusters[sortcd[0].cl].Observations = append(clusters[sortcd[0].cl].Observations, diffB[j].data)
+					// 	}
 				}
+				// for j := 0; j < len(diffB); j++ {
+				// 	clusters[B].Observations = append(clusters[B].Observations, diffB[j].data)
+				// }
 			}
 			clusters.Recenter()
 		}
