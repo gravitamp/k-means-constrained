@@ -41,7 +41,7 @@ func main() {
 	min, max := MinMax(count)
 	fmt.Println(min, max)
 	iter := 0
-	for max-min > 3 {
+	for max-min > 10 {
 		var count3 []int
 		//  Plan the steps of adjustment among clusters;
 		// 19 step (0, 1) (1,2), dst
@@ -50,9 +50,37 @@ func main() {
 			// cc, _ := New(20, clusters[i].Observations)
 			var diffA Observations
 			var diffB []diffsort
+			// type sorted struct {
+			// 	cl int
+			// 	dt float64
+			// }
+			// var sortcd []sorted
+			// var B int
+			// for i, _ := range clusters {
+			// 	// search nearest neighbour
+			// 	r, cd := clusters.Neighbour(clusters[i].Center, i)
+			// 	sortcd = append(sortcd, sorted{
+			// 		r,
+			// 		cd,
+			// 	})
+			// }
+
+			// //close (?)
+			// sort.SliceStable(sortcd, func(i, j int) bool {
+			// 	return sortcd[i].dt < sortcd[j].dt
+			// })
+			// B = sortcd[0].cl
+			// if len(clusters[B].Observations) > 102 {
+			// 	//bikin neighbour yang isinya < 102
+			// 	B = sortcd[1].cl
+			// }
 
 			//call borderadjust, get new cluster A & B
-			diffA, diffB = clusters.borderadjust(i)
+			if i < (len(clusters) - 1) {
+				diffA, diffB = clusters.borderadjust(i, i+1)
+			} else {
+				diffA, diffB = clusters.borderadjust(i, 0)
+			}
 
 			if len(diffA) == 0 && len(diffB) == 0 {
 				continue
