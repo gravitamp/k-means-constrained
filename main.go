@@ -15,6 +15,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 )
 
@@ -43,6 +44,26 @@ func main() {
 	iter := 0
 	for max-min > 10 {
 		var count3 []int
+		type sorted struct {
+			cl int
+			dt float64
+		}
+		var sortcd []sorted
+		for i, _ := range clusters {
+			// search nearest neighbour
+			// r, cd := clusters.Neighbour(clusters[i].Center, 0)
+			// for _, p := range clusters[i].Observations {
+			// r, _ = c.Neighbour(p, A)
+			distA := clusters[0].Center.Distance(clusters[i].Center)
+			sortcd = append(sortcd, sorted{
+				i,
+				distA,
+			})
+			// }
+		}
+		sort.SliceStable(sortcd, func(i, j int) bool {
+			return sortcd[i].dt < sortcd[j].dt
+		})
 		//  Plan the steps of adjustment among clusters;
 		// 19 step (0, 1) (1,2), dst
 		for i := 0; i < len(clusters); i++ {
@@ -50,59 +71,35 @@ func main() {
 			// cc, _ := New(20, clusters[i].Observations)
 			var diffA Observations
 			var diffB []diffsort
-			// type sorted struct {
-			// 	cl int
-			// 	dt float64
-			// }
-			// var sortcd []sorted
-			var B int
 
 			if len(clusters[i].Observations) < 102 {
 				continue
 			}
-			// for i, _ := range clusters {
-			// search nearest neighbour
-			// r, cd := clusters.Neighbour(clusters[i].Center, i)
-			// 	sortcd = append(sortcd, sorted{
-			// 		r,
-			// 		cd,
-			// 	})
-			// }
 
-			//close (?)
-			// sort.SliceStable(sortcd, func(i, j int) bool {
-			// 	return sortcd[i].dt < sortcd[j].dt
-			// })
-			// B = sortcd[0].cl
-			// if len(clusters[B].Observations) > 102 {
-			// 	//bikin neighbour yang isinya < 102
-			// 	B = sortcd[1].cl
-			// }
-
-			// //call borderadjust, get new cluster A & B
-			// if i < (len(clusters) - 1) {
-			B, _ = clusters.Neighbour(clusters[i].Center, i)
-			diffA, diffB = clusters.borderadjust(i, B)
-			// } else {
-			// 	diffA, diffB = clusters.borderadjust(i, 0)
-			// }
+			//call borderadjust, get new cluster A & B
+			if i < (len(clusters) - 1) {
+				// B, _ = clusters.Neighbour(clusters[i].Observations[i], i)
+				diffA, diffB = clusters.borderadjust(sortcd[i].cl, sortcd[i+1].cl)
+			} else {
+				diffA, diffB = clusters.borderadjust(sortcd[i].cl, sortcd[0].cl)
+			}
 
 			if len(diffA) == 0 && len(diffB) == 0 {
 				continue
 			} else if len(diffA) != 0 && len(diffB) != 0 {
 				clusters[i].Observations = diffA
-				// 	if i < (len(clusters) - 1) {
-				// 		for j := 0; j < len(diffB); j++ {
-				// 			clusters[i+1].Observations = append(clusters[i+1].Observations, diffB[j].data)
-				// 		}
-				// 	} else {
-				// 		for j := 0; j < len(diffB); j++ {
-				// 			clusters[0].Observations = append(clusters[0].Observations, diffB[j].data)
-				// 		}
-				// 	}
-				for j := 0; j < len(diffB); j++ {
-					clusters[B].Observations = append(clusters[B].Observations, diffB[j].data)
+				if i < (len(clusters) - 1) {
+					for j := 0; j < len(diffB); j++ {
+						clusters[i+1].Observations = append(clusters[sortcd[i+1].cl].Observations, diffB[j].data)
+					}
+				} else {
+					for j := 0; j < len(diffB); j++ {
+						clusters[0].Observations = append(clusters[sortcd[0].cl].Observations, diffB[j].data)
+					}
 				}
+				// for j := 0; j < len(diffB); j++ {
+				// 	clusters[B].Observations = append(clusters[B].Observations, diffB[j].data)
+				// }
 			}
 			clusters.Recenter()
 		}
