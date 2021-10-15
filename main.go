@@ -55,17 +55,21 @@ func main() {
 			// 	dt float64
 			// }
 			// var sortcd []sorted
-			// var B int
+			var B int
+
+			if len(clusters[i].Observations) < 102 {
+				continue
+			}
 			// for i, _ := range clusters {
-			// 	// search nearest neighbour
-			// 	r, cd := clusters.Neighbour(clusters[i].Center, i)
+			// search nearest neighbour
+			// r, cd := clusters.Neighbour(clusters[i].Center, i)
 			// 	sortcd = append(sortcd, sorted{
 			// 		r,
 			// 		cd,
 			// 	})
 			// }
 
-			// //close (?)
+			//close (?)
 			// sort.SliceStable(sortcd, func(i, j int) bool {
 			// 	return sortcd[i].dt < sortcd[j].dt
 			// })
@@ -75,25 +79,29 @@ func main() {
 			// 	B = sortcd[1].cl
 			// }
 
-			//call borderadjust, get new cluster A & B
-			if i < (len(clusters) - 1) {
-				diffA, diffB = clusters.borderadjust(i, i+1)
-			} else {
-				diffA, diffB = clusters.borderadjust(i, 0)
-			}
+			// //call borderadjust, get new cluster A & B
+			// if i < (len(clusters) - 1) {
+			B, _ = clusters.Neighbour(clusters[i].Center, i)
+			diffA, diffB = clusters.borderadjust(i, B)
+			// } else {
+			// 	diffA, diffB = clusters.borderadjust(i, 0)
+			// }
 
 			if len(diffA) == 0 && len(diffB) == 0 {
 				continue
 			} else if len(diffA) != 0 && len(diffB) != 0 {
 				clusters[i].Observations = diffA
-				if i < (len(clusters) - 1) {
-					for j := 0; j < len(diffB); j++ {
-						clusters[i+1].Observations = append(clusters[i+1].Observations, diffB[j].data)
-					}
-				} else {
-					for j := 0; j < len(diffB); j++ {
-						clusters[0].Observations = append(clusters[0].Observations, diffB[j].data)
-					}
+				// 	if i < (len(clusters) - 1) {
+				// 		for j := 0; j < len(diffB); j++ {
+				// 			clusters[i+1].Observations = append(clusters[i+1].Observations, diffB[j].data)
+				// 		}
+				// 	} else {
+				// 		for j := 0; j < len(diffB); j++ {
+				// 			clusters[0].Observations = append(clusters[0].Observations, diffB[j].data)
+				// 		}
+				// 	}
+				for j := 0; j < len(diffB); j++ {
+					clusters[B].Observations = append(clusters[B].Observations, diffB[j].data)
 				}
 			}
 			clusters.Recenter()
