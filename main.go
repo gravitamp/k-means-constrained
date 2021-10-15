@@ -76,6 +76,7 @@ func main() {
 				continue
 			}
 
+			fmt.Println(sortcd)
 			//call borderadjust, get new cluster A & B
 			if i < (len(clusters) - 1) {
 				// B, _ = clusters.Neighbour(clusters[i].Observations[i], i)
@@ -87,14 +88,14 @@ func main() {
 			if len(diffA) == 0 && len(diffB) == 0 {
 				continue
 			} else if len(diffA) != 0 && len(diffB) != 0 {
-				clusters[i].Observations = diffA
+				clusters[sortcd[i].cl].Observations = diffA
 				if i < (len(clusters) - 1) {
 					for j := 0; j < len(diffB); j++ {
-						clusters[i+1].Observations = append(clusters[sortcd[i+1].cl].Observations, diffB[j].data)
+						clusters[sortcd[i+1].cl].Observations = append(clusters[sortcd[i+1].cl].Observations, diffB[j].data)
 					}
 				} else {
 					for j := 0; j < len(diffB); j++ {
-						clusters[0].Observations = append(clusters[sortcd[0].cl].Observations, diffB[j].data)
+						clusters[sortcd[0].cl].Observations = append(clusters[sortcd[0].cl].Observations, diffB[j].data)
 					}
 				}
 				// for j := 0; j < len(diffB); j++ {
