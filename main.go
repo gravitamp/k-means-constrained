@@ -14,9 +14,14 @@ package main
 import (
 	"encoding/csv"
 	"fmt"
+	"image/color"
 	"os"
 	"sort"
 	"strconv"
+
+	sm "github.com/flopp/go-staticmaps"
+	"github.com/fogleman/gg"
+	"github.com/golang/geo/s2"
 )
 
 var d Observations
@@ -133,6 +138,27 @@ func main() {
 		count2 += len(c.Observations)
 	}
 	fmt.Println(count2)
+
+	//plot
+	ctx := sm.NewContext()
+	ctx.SetSize(500, 500)
+	for _, c := range clusters {
+		ctx.AddObject(
+			sm.NewMarker(
+				s2.LatLngFromDegrees(c.Center[1], c.Center[0]),
+				color.RGBA{0, 0, 0xff, 0xff},
+				16.0,
+			),
+		)
+	}
+	img, err := ctx.Render()
+	if err != nil {
+		panic(err)
+	}
+
+	if err := gg.SavePNG("my-map.png", img); err != nil {
+		panic(err)
+	}
 }
 
 func setupData(file string) {
