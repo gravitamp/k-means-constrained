@@ -51,9 +51,7 @@ func main() {
 		var sortcd []sorted
 		for i, _ := range clusters {
 			// search nearest neighbour
-			// r, cd := clusters.Neighbour(clusters[i].Center, 0)
-			// for _, p := range clusters[i].Observations {
-			// r, _ = c.Neighbour(p, A)
+
 			distA := clusters[0].Center.Distance(clusters[i].Center)
 			sortcd = append(sortcd, sorted{
 				i,
@@ -66,19 +64,19 @@ func main() {
 		})
 		//  Plan the steps of adjustment among clusters;
 		// 19 step (0, 1) (1,2), dst
-		for i := 0; i < len(clusters); i++ {
+		for i := 1; i < len(clusters); i++ {
 
 			// cc, _ := New(20, clusters[i].Observations)
 			var diffA Observations
 			var diffB []diffsort
 
-			if len(clusters[i].Observations) < 102 {
-				continue
-			}
+			// if len(clusters[i].Observations) < 102 {
+			// 	continue
+			// }
 
 			// fmt.Println(sortcd)
 			//call borderadjust, get new cluster A & B
-			if i > 0 && i < len(clusters) {
+			if i < len(clusters) {
 				// B, _ = clusters.Neighbour(clusters[i].Observations[i], i)
 				diffA, diffB = clusters.borderadjust(sortcd[i-1].cl, sortcd[i].cl)
 				// fmt.Println(diffA, diffB)
@@ -124,7 +122,7 @@ func main() {
 				return //nil, fmt.Errorf("failed to plot chart: %s", err)
 			}
 		}
-		//max iter
+		//max iter or no changes (?)
 		if iter == 10 {
 			break
 		}

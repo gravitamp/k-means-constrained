@@ -35,9 +35,9 @@ func (c Clusters) borderadjust(A int, B int) (Observations, []diffsort) {
 
 	//  Move the first m point in area A based on sorted
 	// diff(p, B) to area B;
-	chunkSize := (len(d) + 20 - 1) / 20
-	if len(c[A].Observations) > chunkSize && len(c[A].Observations) > len(c[B].Observations) {
-		m := len(c[A].Observations) - chunkSize
+	// chunkSize := (len(d) + 20 - 1) / 20
+	if len(c[A].Observations) > 102 { //&& len(c[A].Observations) > len(c[B].Observations) {
+		m := len(c[A].Observations) - 102
 		for i := 0; i < m; i++ {
 			// move to B
 			diffB = append(diffB, diff[i])
