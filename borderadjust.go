@@ -10,7 +10,7 @@ type diffsort struct {
 	data   Observation
 }
 
-func (c Clusters) borderadjust(A int, B int) (Observations, []diffsort) {
+func (c Clusters) borderadjust(A int, B int) (Observations, Observations) {
 	rand.Seed(20)
 	// For each point p in area A
 	var diff []diffsort
@@ -50,5 +50,5 @@ func (c Clusters) borderadjust(A int, B int) (Observations, []diffsort) {
 			obsB = append(obsB, diffB[i].data)
 		}
 	}
-	return obsA, diffB
+	return obsA, obsB
 }

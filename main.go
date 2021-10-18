@@ -26,7 +26,8 @@ func main() {
 	//setup data
 	setupData("Traffic4.csv")
 	// Partition the data points into 20 clusters
-	km, _ := NewWithOptions(0.01, SimplePlotter{})
+	km, _ := NewWithOptions(0.07, SimplePlotter{})
+
 	clusters, _ := km.Partition(d, 20)
 
 	for _, c := range clusters {
@@ -64,17 +65,12 @@ func main() {
 		})
 		//  Plan the steps of adjustment among clusters;
 		// 19 step (0, 1) (1,2), dst
+
 		for i := 1; i < len(clusters); i++ {
 
-			// cc, _ := New(20, clusters[i].Observations)
 			var diffA Observations
-			var diffB []diffsort
+			var diffB Observations
 
-			// if len(clusters[i].Observations) < 102 {
-			// 	continue
-			// }
-
-			// fmt.Println(sortcd)
 			//call borderadjust, get new cluster A & B
 			if i < len(clusters) {
 				// B, _ = clusters.Neighbour(clusters[i].Observations[i], i)
@@ -90,7 +86,7 @@ func main() {
 				clusters[sortcd[i-1].cl].Observations = diffA
 				if i > 0 && i < len(clusters) {
 					for j := 0; j < len(diffB); j++ {
-						clusters[sortcd[i].cl].Observations = append(clusters[sortcd[i].cl].Observations, diffB[j].data)
+						clusters[sortcd[i].cl].Observations = append(clusters[sortcd[i].cl].Observations, diffB[j])
 					}
 					// } else {
 					// 	for j := 0; j < len(diffB); j++ {
