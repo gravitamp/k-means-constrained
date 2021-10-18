@@ -20,7 +20,6 @@ func (c Clusters) borderadjust(A int, B int) (Observations, Observations) {
 	var obsB Observations
 
 	for _, p := range c[A].Observations {
-
 		distA := p.Distance(c[A].Center)
 		distB := p.Distance(c[B].Center)
 

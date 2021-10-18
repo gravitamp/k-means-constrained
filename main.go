@@ -93,14 +93,7 @@ func main() {
 					for j := 0; j < len(diffB); j++ {
 						clusters[sortcd[i].cl].Observations = append(clusters[sortcd[i].cl].Observations, diffB[j])
 					}
-					// } else {
-					// 	for j := 0; j < len(diffB); j++ {
-					// 		clusters[sortcd[0].cl].Observations = append(clusters[sortcd[0].cl].Observations, diffB[j].data)
-					// 	}
 				}
-				// for j := 0; j < len(diffB); j++ {
-				// 	clusters[B].Observations = append(clusters[B].Observations, diffB[j].data)
-				// }
 			}
 			clusters.Recenter()
 		}
@@ -143,6 +136,17 @@ func main() {
 	ctx := sm.NewContext()
 	ctx.SetSize(500, 500)
 	for _, c := range clusters {
+		for _, p := range c.Observations {
+			ctx.AddObject(
+				sm.NewCircle(
+					s2.LatLngFromDegrees(p.Coordinates().Coordinates()[1], p.Coordinates().Coordinates()[0]),
+					color.RGBA{0, 0xff, 0, 0xff},
+					color.RGBA{0, 0x0f, 0, 0xff},
+					80.0,
+					10.0,
+				),
+			)
+		}
 		ctx.AddObject(
 			sm.NewMarker(
 				s2.LatLngFromDegrees(c.Center[1], c.Center[0]),
@@ -151,6 +155,7 @@ func main() {
 			),
 		)
 	}
+
 	img, err := ctx.Render()
 	if err != nil {
 		panic(err)
@@ -205,4 +210,31 @@ func MinMax(array []int) (int, int) {
 		}
 	}
 	return min, max
+}
+
+type RGBA struct {
+	R, G, B, A uint8
+}
+
+var colour = []RGBA{
+	{0xf9, 0x26, 0x72, 0xff},
+	{0x89, 0xbd, 0xff, 0xff},
+	{0x66, 0xd9, 0xef, 0xff},
+	{0x67, 0x21, 0x0c, 0xff},
+	{0x7a, 0xcd, 0x10, 0xff},
+	{0xaf, 0x61, 0x9f, 0xff},
+	{0xfd, 0x97, 0x1f, 0xff},
+	{0xdc, 0xc0, 0x60, 0xff},
+	{0x54, 0x52, 0x50, 0xff},
+	{0x4b, 0x75, 0x09, 0xff},
+	{0xff, 0x00, 0xff, 0xff},
+	{0xff, 0x23, 0x54, 0xff},
+	{0x45, 0x2c, 0x1a, 0xff},
+	{0x22, 0x4f, 0x42, 0xff},
+	{0x7a, 0xab, 0x23, 0xff},
+	{0xaf, 0x00, 0x2f, 0xff},
+	{0xfd, 0x09, 0x3c, 0xff},
+	{0xdc, 0x88, 0xf9, 0xff},
+	{0x54, 0x92, 0x6e, 0xff},
+	{0xc3, 0x21, 0x01, 0xff},
 }
